@@ -39,9 +39,6 @@ class CarInsurance {
         case 'Super Sale':
           sellIn > 0 ? (price = price - 2) : (price = price - 4);
           break;
-
-        default:
-          break;
       }
 
       if (price < 0) price = 0;
