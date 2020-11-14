@@ -20,15 +20,24 @@ class CarInsurance {
       switch (name) {
         case 'Medium Coverage':
         case 'Low Coverage':
-          sellIn >= 0 ? (price = price - 1) : (price = price - 2);
+          sellIn > 0 ? (price = price - 1) : (price = price - 2);
           break;
         case 'Full Coverage':
+          if (price < 50) {
+            sellIn > 0 ? (price = price + 1) : (price = price + 2);
+          }
           break;
         case 'Special Full Coverage':
-          break;
-        case 'Mega Coverage':
+          if (price < 50 && sellIn > 0) {
+            price = price + 1;
+            if (sellIn <= 10) price = price + 1;
+            if (sellIn <= 5) price = price + 1;
+          }
+          if (sellIn <= 0) price = 0;
+          if (price > 50) price = 50;
           break;
         case 'Super Sale':
+          sellIn > 0 ? (price = price - 2) : (price = price - 4);
           break;
 
         default:
@@ -37,7 +46,7 @@ class CarInsurance {
 
       if (price < 0) price = 0;
       this.products[i].price = price;
-      this.products[i].sellIn = sellIn - 1;
+      if (name != 'Mega Coverage') this.products[i].sellIn = sellIn - 1;
     }
 
     return this.products;
