@@ -10,51 +10,34 @@ class CarInsurance {
   constructor(products = []) {
     this.products = products;
   }
+
   updatePrice() {
     for (var i = 0; i < this.products.length; i++) {
-      if (this.products[i].name != 'Full Coverage' && this.products[i].name != 'Special Full Coverage') {
-        if (this.products[i].price > 0) {
-          if (this.products[i].name != 'Mega Coverage') {
-            this.products[i].price = this.products[i].price - 1;
-          }
-        }
-      } else {
-        if (this.products[i].price < 50) {
-          this.products[i].price = this.products[i].price + 1;
-          if (this.products[i].name == 'Special Full Coverage') {
-            if (this.products[i].sellIn < 11) {
-              if (this.products[i].price < 50) {
-                this.products[i].price = this.products[i].price + 1;
-              }
-            }
-            if (this.products[i].sellIn < 6) {
-              if (this.products[i].price < 50) {
-                this.products[i].price = this.products[i].price + 1;
-              }
-            }
-          }
-        }
+      let name = this.products[i].name;
+      let price = this.products[i].price;
+      let sellIn = this.products[i].sellIn;
+
+      switch (name) {
+        case 'Medium Coverage':
+        case 'Low Coverage':
+          sellIn >= 0 ? (price = price - 1) : (price = price - 2);
+          break;
+        case 'Full Coverage':
+          break;
+        case 'Special Full Coverage':
+          break;
+        case 'Mega Coverage':
+          break;
+        case 'Super Sale':
+          break;
+
+        default:
+          break;
       }
-      if (this.products[i].name != 'Mega Coverage') {
-        this.products[i].sellIn = this.products[i].sellIn - 1;
-      }
-      if (this.products[i].sellIn < 0) {
-        if (this.products[i].name != 'Full Coverage') {
-          if (this.products[i].name != 'Special Full Coverage') {
-            if (this.products[i].price > 0) {
-              if (this.products[i].name != 'Mega Coverage') {
-                this.products[i].price = this.products[i].price - 1;
-              }
-            }
-          } else {
-            this.products[i].price = this.products[i].price - this.products[i].price;
-          }
-        } else {
-          if (this.products[i].price < 50) {
-            this.products[i].price = this.products[i].price + 1;
-          }
-        }
-      }
+
+      if (price < 0) price = 0;
+      this.products[i].price = price;
+      this.products[i].sellIn = sellIn - 1;
     }
 
     return this.products;
@@ -63,5 +46,5 @@ class CarInsurance {
 
 module.exports = {
   Product,
-  CarInsurance
-}
+  CarInsurance,
+};
